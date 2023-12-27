@@ -5,8 +5,6 @@ import com.hevlar.graphql.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-
 @Service
 public class ProductService {
 
