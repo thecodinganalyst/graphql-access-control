@@ -1,6 +1,18 @@
 CREATE TABLE product (
-    id BIGINT PRIMARY KEY,
+    id IDENTITY PRIMARY KEY,
     name VARCHAR(255),
     price DOUBLE,
     cost DOUBLE
+);
+
+CREATE TABLE ROLE_TBL (
+    id IDENTITY PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE ACCESS_CONTROL (
+    id IDENTITY PRIMARY KEY,
+    role BIGINT,
+    entity VARCHAR(255),
+    col VARCHAR(255)
 );
