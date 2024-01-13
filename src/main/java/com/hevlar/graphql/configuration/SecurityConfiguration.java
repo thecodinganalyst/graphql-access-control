@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();
     }
 
@@ -36,7 +37,7 @@ public class SecurityConfiguration {
     public ReactiveUserDetailsService reactiveUserDetailsService(){
         UserDetails administrator = User
                 .builder()
-                .username("administrator")
+                .username("admin")
                 .password("{bcrypt}$2a$12$MPKhq7X2817XkJETLR4p5.mo4Of3WMeNkoYgcZ5V6UX5u5jN2NQzu")
                 .roles("ADMIN")
                 .build();
