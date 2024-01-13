@@ -3,17 +3,14 @@ package com.hevlar.graphql.graphql;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.visibility.GraphqlFieldVisibility;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class CustomFieldVisibility implements GraphqlFieldVisibility {
-
-    @NonNull
-    final SecurityContext securityContext;
 
     @Override
     public List<GraphQLFieldDefinition> getFieldDefinitions(GraphQLFieldsContainer fieldsContainer) {
@@ -22,6 +19,6 @@ public class CustomFieldVisibility implements GraphqlFieldVisibility {
 
     @Override
     public GraphQLFieldDefinition getFieldDefinition(GraphQLFieldsContainer fieldsContainer, String fieldName) {
-        return null;
+        return fieldsContainer.getFieldDefinition(fieldName);
     }
 }
