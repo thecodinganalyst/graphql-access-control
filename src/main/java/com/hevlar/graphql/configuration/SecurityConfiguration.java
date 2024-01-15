@@ -10,12 +10,9 @@ import org.springframework.security.core.userdetails.MapReactiveUserDetailsServi
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+    import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-
-import java.util.Map;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -52,9 +49,6 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        Map<String, PasswordEncoder> encoderMap = Map.of(
-                "bcrypt", new BCryptPasswordEncoder()
-        );
-        return new DelegatingPasswordEncoder("bcrypt", encoderMap);
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
