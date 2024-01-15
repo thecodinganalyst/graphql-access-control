@@ -41,7 +41,13 @@ public class SecurityConfiguration {
                 .password("{bcrypt}$2a$12$MPKhq7X2817XkJETLR4p5.mo4Of3WMeNkoYgcZ5V6UX5u5jN2NQzu")
                 .roles("ADMIN")
                 .build();
-        return new MapReactiveUserDetailsService(administrator);
+        UserDetails user = User
+                .builder()
+                .username("user")
+                .password("{bcrypt}$2a$12$MPKhq7X2817XkJETLR4p5.mo4Of3WMeNkoYgcZ5V6UX5u5jN2NQzu")
+                .roles("USER")
+                .build();
+        return new MapReactiveUserDetailsService(administrator, user);
     }
 
     @Bean

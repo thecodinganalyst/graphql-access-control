@@ -24,28 +24,25 @@ public class ApplicationStartup implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Role adminRole = roleService.create(
+        Role adminRole = createRole("admin");
+        createAccessControl(adminRole, "Product", "id", "name", "price", "cost");
+
+        Role userRole = createRole("user");
+        createAccessControl(userRole, "Product", "id", "name", "price");
+    }
+
+    private void createAccessControl(Role role, String entity, String... cols) {
+        List<AccessControl> accessControlList = accessControlService
+                .create(role.getId(), entity, cols)
+                .collectList()
+                .block();
+    }
+
+    private Role createRole(String roleName) {
+        return roleService.create(
                 Role.builder()
-                        .name("admin")
+                        .name(roleName)
                         .build()
         ).block();
-
-        assert adminRole != null;
-        List<AccessControl> adminAccessControlList = accessControlService.create(
-                adminRole.getId(),
-                        "Product",
-                        "id", "name", "price", "cost")
-                .collectList().block();
-
-        Role anonymousRole = roleService.create(
-                Role.builder()
-                        .name("anonymous")
-                        .build()
-        ).block();
-        List<AccessControl> anonymousAccessControlList = accessControlService.create(
-                        adminRole.getId(),
-                        "Product",
-                        "id", "name", "price")
-                .collectList().block();
     }
 }
